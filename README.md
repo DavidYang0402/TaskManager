@@ -1,5 +1,5 @@
 # TaskManager
-一個基於 **ASP.NET Core** 和 **Entity Framework Core** 的任務管理系統。
+一個基於 **ASP.NET Core MVC** 和 **Entity Framework Core** 的任務管理系統。
 
 ## 📌 特色
 - **使用者管理**（登入/登出）
