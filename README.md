@@ -5,7 +5,6 @@
 - **使用者管理**（登入/登出）
 - **任務管理**（CRUD）
 - **身份驗證與授權**（使用 ASP.NET Core Identity）
-- **資料庫支援 MySQL / SQLite**
 - **Clean Architecture 設計**
 
 ## 🚀 環境需求
