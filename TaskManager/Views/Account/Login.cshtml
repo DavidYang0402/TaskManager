@@ -1,0 +1,25 @@
+﻿@model TaskManager.ViewModels.LoginViewModel
+
+<h2>登入</h2>
+
+<form asp-action="Login" method="post">
+    <div class="mb-4">
+        <div class="form-group">
+            <label for="UserName">帳號</label>
+            <input type="text" id="UserName" name="UserName" class="form-control" asp-for="UserName" placeholder="UserName" />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="Password">密碼</label>
+            <input type="password" id="Password" name="Password" class="form-control" asp-for="Password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">登入</button>
+
+    <div class="form-group">
+        <a href="@Url.Action("Register", "Account")">還沒有帳號？點此註冊</a>
+    </div>
+</form>

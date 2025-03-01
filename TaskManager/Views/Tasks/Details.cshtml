@@ -1,0 +1,30 @@
+﻿@model TaskManager.ViewModels.TaskViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h3>詳細任務</h3>
+
+<div class="mb-4">
+    <h2>@Html.DisplayFor(model => model.Title)</h2>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            <h5>描述：</h5>
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            <h5>狀態：</h5>
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning">Edit</a> |
+    <a asp-action="Index" class="btn btn-link">>Back to List</a>
+</div>
