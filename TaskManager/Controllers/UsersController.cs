@@ -9,7 +9,7 @@ using TaskManager.ViewModels;
 
 namespace TaskManager.Controllers
 {
-    [Authorize(Roles = "Admin")] // ✅ 只有 Admin 可以管理使用者
+    [Authorize(Roles = "Admin")] // 只有 Admin 可以管理使用者
     public class UsersController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
