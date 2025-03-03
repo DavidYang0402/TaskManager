@@ -217,7 +217,7 @@ public class TasksController : Controller
         var user = await _userManager.GetUserAsync(User);
         if (user == null) return Unauthorized();
 
-        // ✅ 只有 Task 擁有者 或 Admin 才能刪除
+        // 只有 Task 擁有者 或 Admin 才能刪除
         if (task.UserId != user.Id && !await _userManager.IsInRoleAsync(user, "Admin"))
         {
             return Forbid();
