@@ -10,8 +10,10 @@ namespace TaskManager.Data
     {
         public static async System.Threading.Tasks.Task InitializeAsync(IServiceProvider services, string adminPW)
         {
-            var roleManager = services.GetRequiredService<RoleManager<ApplicationRole>>();
-            var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+            using var scope = services.CreateScope();
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
             await EnsureRolesAsync(roleManager);
             await EnsureAdminAsync(userManager, adminPW);
         }

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TaskManager;
 using TaskManager.Models;
+using TaskManager.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,12 +30,19 @@ builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
+//admin and user is created
+using (var scope = app.Services.CreateScope()) { 
+    var services = scope.ServiceProvider;
+    var adminPassword = app.Configuration["AdminPassword"] ?? "Admin@123";
+    await SeedData.InitializeAsync(services, adminPassword);
 }
+
+    // Configure the HTTP request pipeline.
+    if (!app.Environment.IsDevelopment())
+    {
+        app.UseExceptionHandler("/Home/Error");
+        app.UseHsts();
+    }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
