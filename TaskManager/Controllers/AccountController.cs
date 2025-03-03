@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using TaskManager.ViewModels;
 using TaskManager.Models;
 using TaskManager.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace TaskManagerApp.Controllers
 {
@@ -27,6 +29,13 @@ namespace TaskManagerApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                //var user = await _userManager.FindByNameAsync(model.UserName);
+                //if (user == null || !user.EmailConfirmed)
+                //{
+                //    ModelState.AddModelError(string.Empty, "請確認您的 Email 並重新登入。");
+                //    return View(model);
+                //}
+
                 var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
@@ -66,6 +75,11 @@ namespace TaskManagerApp.Controllers
                     // 直接將 EmailConfirmed 設為 true
                     user.EmailConfirmed = true;
                     await _userManager.UpdateAsync(user);
+
+                    if (!await _userManager.IsInRoleAsync(user, "User"))
+                    {
+                        await _userManager.AddToRoleAsync(user, "User");
+                    }
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Tasks");

@@ -1,0 +1,49 @@
+﻿@model IEnumerable<TaskManager.Models.ApplicationUser>
+
+@{
+    ViewData["Title"] = "使用者管理";
+    var userRoles = ViewBag.UserRoles as Dictionary<string, string>;
+}
+
+<h1>使用者管理</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>使用者名稱</th>
+            <th>Email</th>
+            <th>角色</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>
+                    <form method="post" asp-action="EditUserRole">
+                        <input type="hidden" name="userId" value="@user.Id" />
+                        <select name="newRole" class="form-select">
+                            <option value="Admin" selected="@(userRoles[user.Id.ToString()] == "Admin" ? "selected" : null)">Admin</option>
+                            <option value="User" selected="@(userRoles[user.Id.ToString()] == "User" ? "selected" : null)">User</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary btn-sm">變更角色</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="post" asp-action="DeleteUser" onsubmit="return confirm('確定要刪除這個使用者嗎？');">
+                        <input type="hidden" name="userId" value="@user.Id" />
+                        <button type="submit" class="btn btn-danger btn-sm">刪除</button>
+                    </form>
+                    <form method="post" asp-action="ResetPassword">
+                        <input type="hidden" name="userId" value="@user.Id" />
+                        <input type="text" name="newPassword" placeholder="新密碼" required class="form-control-sm" />
+                        <button type="submit" class="btn btn-warning btn-sm">重設密碼</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
