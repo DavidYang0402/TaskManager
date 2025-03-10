@@ -24,7 +24,7 @@ public class TasksController : Controller
         _mapper = mapper;
     }
 
-    [Authorize]
+    [AllowAnonymous]
     public async Task<IActionResult> Index()
     {
         var user = await _userManager.GetUserAsync(User);
@@ -47,23 +47,37 @@ public class TasksController : Controller
             CurrentUserId = user.Id
         });
 
-        //if (User.Identity == null || !User.Identity.IsAuthenticated)
+
+        //var userIdString = _userManager.GetUserId(User);
+        //Guid? userId = string.IsNullOrEmpty(userIdString) ? null : Guid.Parse(userIdString);
+
+        //List<TaskDTO> taskItems;
+
+        //if (userId == null)
         //{
-        //    var allTasks = await _taskService.GetAllTasksAsync();
-        //    var allTasksViewModel = _mapper.Map<List<TaskViewModel>>(allTasks);
-        //    return View(new TaskListViewModel { Tasks = allTasksViewModel });
+        //    taskItems = await _taskService.GetAllTasksAsync(); // 無法取得當前用戶，顯示所有任務
+        //}
+        //else
+        //{
+        //    var user = await _userManager.FindByIdAsync(userIdString); // 取得當前用戶
+        //    bool isAdmin = await _userManager.IsInRoleAsync(user, "Admin"); // 是否為 Admin
+
+        //    if (isAdmin)
+        //    {
+        //        taskItems = await _taskService.GetAllTasksAsync(); // Admin 看到所有人的任務
+        //    }
+        //    else
+        //    {
+        //        taskItems = await _taskService.GetTasksByUserIdAsync(userId.Value); // User 只看到自己的任務
+        //    }
         //}
 
-        //var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        //if (!Guid.TryParse(userIdString, out var currentUserId)) return Unauthorized();
-
-        //var tasks = await _taskService.GetTasksByUserIdAsync(currentUserId);
-        //var taskViewModels = _mapper.Map<List<TaskViewModel>>(tasks);
+        //var taskViewModels = _mapper.Map<List<TaskViewModel>>(taskItems);
 
         //return View(new TaskListViewModel
         //{
         //    Tasks = taskViewModels,
-        //    CurrentUserId = currentUserId
+        //    CurrentUserId = (Guid)userId
         //});
     }
 

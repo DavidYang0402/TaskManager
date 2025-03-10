@@ -9,7 +9,7 @@
 }
 
 <div class="container">
-    <h1 class="display-1 text-center">Tasks</h1>
+    <h2 class="text-center mt-4">Task List</h2>
 </div>
 
 @if (isAuthenticated)
@@ -34,7 +34,9 @@
             var isOwner = isAuthenticated && Model.CurrentUserId.ToString() == currentUserId;
             <tr>
                 <td>@item.Title</td>
-                <td>@item.Description</td>
+                <td>
+                    @(item.Description.Length > 50 ? @item.Description.Substring(0, 50) + " ..." : @item.Description)
+                </td>
                 <td>@item.Status</td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">View</a>

@@ -1,25 +1,37 @@
 ﻿@model TaskManager.ViewModels.LoginViewModel
 
-<h2>登入</h2>
+@{
+    ViewData["Title"] = "登入";
+}
 
-<form asp-action="Login" method="post">
-    <div class="mb-4">
-        <div class="form-group">
-            <label for="UserName">帳號</label>
-            <input type="text" id="UserName" name="UserName" class="form-control" asp-for="UserName" placeholder="UserName" />
-            <span asp-validation-for="UserName" class="text-danger"></span>
-        </div>
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow-lg" style="width: 350px;">
+        <h2 class="text-center mb-4">登入</h2>
 
-        <div class="form-group">
-            <label for="Password">密碼</label>
-            <input type="password" id="Password" name="Password" class="form-control" asp-for="Password" />
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
+        <form asp-action="Login" method="post">
+            <div class="form-group mb-3">
+                <label for="UserName"><i class="bi bi-person"></i> 帳號</label>
+                <input type="text" id="UserName" name="UserName" class="form-control" asp-for="UserName" placeholder="請輸入帳號" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="Password"><i class="bi bi-lock"></i> 密碼</label>
+                <input type="password" id="Password" name="Password" class="form-control" asp-for="Password" placeholder="請輸入密碼" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">登入</button>
+
+            <div class="text-center mt-3">
+                <a href="@Url.Action("Register", "Account")">還沒有帳號？點此註冊</a>
+            </div>
+        </form>
     </div>
+</div>
 
-    <button type="submit" class="btn btn-primary">登入</button>
-
-    <div class="form-group">
-        <a href="@Url.Action("Register", "Account")">還沒有帳號？點此註冊</a>
-    </div>
-</form>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
